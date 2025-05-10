@@ -8,7 +8,8 @@ times = [4,8,12,16,20]
 solutions = [0.75, 1.5, 3, 6, 12]
 
 data_frame = pd.DataFrame(data)
-x= []
+v = []
+
 for col_id in range(len(data)-1):
     col = data_frame[col_id]
     for i in range(len(col)):
@@ -20,7 +21,8 @@ for col_id in range(len(data)-1):
         return slope*x + intercept
     model = list(map(linregress_func, np.arange(0,25,4)))
 
-    x.append(1/slope)
+    print(slope)
+    v.append(1/slope)
 
     plt.title("wykorzystano substrat o stężeniu:\n" + str(solutions[col_id]) + "mg/ml")
     plt.xlabel("czas [min]")
@@ -29,6 +31,14 @@ for col_id in range(len(data)-1):
     plt.scatter(times, col, color = "skyblue")
     plt.plot(np.arange(0,25,4), model, color = "blue", linestyle = "dashed")
     plt.xticks(np.arange(0,25,4))
-
     plt.show()
-plt.scatter(x, np.arange(len(x)))
+
+
+for i in range(len(solutions)):
+    solutions[i] = 1/solutions[i]
+solutions.reverse()
+v.reverse()
+plt.scatter(solutions, v)
+plt.ylabel("1/v")
+plt.xlabel("1/[S]")
+plt.show()
